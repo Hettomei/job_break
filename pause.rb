@@ -3,8 +3,7 @@
 #
 #$: gem install sqlite3
 #$: sqlite3 pause ##pause is the database name
-#> create table days(day datetime, id int);
-#> create table pauses(id_day int,  duration_sec int);
+#> create table pauses(day datetime,  duration int);
 #> create table temp(start_time datetime);
 
 ##
@@ -20,13 +19,19 @@ class Pause
     @db ||= SQLite3::Database.new( "pause" )
   end
 
-  def temp
-    db.execute( "select * from temp" )
-  end
-  ##
+  ##:
   # Return 'true' if there is no data in temp table
+  def last_entry_time
+    @last_entry = db.execute( "select * from temp" )
+    if @last_entry.empty?
+      return nil
+    else
+      return Time.at(@last_entry.first.first)
+    end
+  end
+
   def start?
-    return temp.empty?
+    return last_entry_time.nil?
   end
 
   def initialize
@@ -44,10 +49,22 @@ class Pause
   end
 
   def end_pause
-    end_time = Time.now
-    puts 'Ending pause, at ' + end_time.to_s
-    p temp.first.first
-    puts "Duration : #{end_time - Time.at(temp.first.first)} secondes (#{(end_time - Time.at(temp.first.first))/60} minutes)"
+    @end_time = Time.now
+    puts 'Ending pause, at ' + @end_time.to_s
+    puts "Duration : #{computed_time(last_entry_time, @end_time)}secondes (#{computed_time(last_entry_time, @end_time, :m)} minutes)"
+
+    db.execute( "INSERT INTO pauses values (?, ?)", last_entry_time.to_i, computed_time(last_entry_time, @end_time) )
+    db.execute( "DELETE from temp" )
+  end
+
+  def computed_time(start_time, end_time, format = :s)
+    case format
+    when :s
+      time = (end_time - start_time).round
+    when :m
+      time = ((end_time - start_time)/60).round(2)
+    end
+      time
   end
 
 end
