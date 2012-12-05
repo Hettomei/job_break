@@ -1,3 +1,4 @@
+#encoding : utf-8
 ##
 #How to create sqlite3 table :
 #
@@ -34,7 +35,7 @@ class Pause
     return last_entry_time.nil?
   end
 
-  def initialize
+  def start_or_end_pause
     if start?
       start_pause
     else
@@ -55,6 +56,21 @@ class Pause
 
     db.execute( "INSERT INTO pauses values (?, ?)", last_entry_time.to_i, computed_time(last_entry_time, @end_time) )
     db.execute( "DELETE from temp" )
+
+    display_all_pause_of_this_day
+  end
+
+  def display_all_pause_of_this_day
+    allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
+    allday.each do |day|
+      puts Time.at(day[0]).strftime("%Y/%m/%d") +
+        " -> " +
+        Time.at(day[1]).utc.strftime("%H:%M:%S")
+    end
+
+    sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
+    puts "Durée total : " +
+      Time.at(sum.first.first).utc.strftime("%H:%M:%S")
   end
 
   def computed_time(start_time, end_time, format = :s)
@@ -67,7 +83,16 @@ class Pause
       time
   end
 
+  def show
+
+  end
+
 end
 
-p = Pause.new
-
+pause = Pause.new
+case ARGV[0]
+when 'show'
+  pause.display_all_pause_of_this_day
+else
+  pause.start_or_end_pause
+end
