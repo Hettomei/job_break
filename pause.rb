@@ -20,23 +20,21 @@ class Pause
     @db ||= SQLite3::Database.new( "pause" )
   end
 
-  ##:
-  # Return 'true' if there is no data in temp table
   def last_entry_time
-    @last_entry = db.execute( "select * from temp" )
-    if @last_entry.empty?
+    last_entry = db.execute( "select * from temp" )
+    if last_entry.empty?
       return nil
     else
-      return Time.at(@last_entry.first.first)
+      return Time.at(last_entry.first.first)
     end
   end
 
-  def start?
-    return last_entry_time.nil?
+  def started?
+    return !!last_entry_time
   end
 
   def start_or_end_pause
-    if start?
+    unless started?
       start_pause
     else
       end_pause
@@ -45,16 +43,16 @@ class Pause
 
   def start_pause
     start_time = Time.now
-    puts 'Starting pause, at ' + start_time.to_s
+    puts 'Début de la pause : ' + start_time.to_s
     db.execute( "insert into temp values ( ? )", start_time.to_i )
   end
 
   def end_pause
     @end_time = Time.now
-    puts 'Ending pause, at ' + @end_time.to_s
-    puts "Duration : #{computed_time(last_entry_time, @end_time)}secondes (#{computed_time(last_entry_time, @end_time, :m)} minutes)"
+    puts 'Fin de la pause : ' + @end_time.strftime("%H:%M:%S")
+    puts "Durée : #{Time.at(@end_time - last_entry_time).utc.strftime("%H:%M:%S")}"
 
-    db.execute( "INSERT INTO pauses values (?, ?)", last_entry_time.to_i, computed_time(last_entry_time, @end_time) )
+    add_pause(@end_time - last_entry_time)
     db.execute( "DELETE from temp" )
 
     display_all_pause_of_this_day
@@ -67,31 +65,29 @@ class Pause
         " -> " +
         Time.at(day[1]).utc.strftime("%H:%M:%S")
     end
-
     sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
-    puts "Durée total : " +
-      Time.at(sum.first.first).utc.strftime("%H:%M:%S")
-  end
-
-  def computed_time(start_time, end_time, format = :s)
-    case format
-    when :s
-      time = (end_time - start_time).round
-    when :m
-      time = ((end_time - start_time)/60).round(2)
+    puts "Durée total : " + Time.at(sum.first.first).utc.strftime("%H:%M:%S")
+    if started?
+      puts 'Une pause est en cours, début : ' + Time.at(last_entry_time).strftime("%H:%M:%S")
+      puts "Durée : #{Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")}"
     end
-      time
   end
 
-  def show
-
+  def add_pause(seconds)
+    db.execute( "INSERT INTO pauses values (?, ?)", Time.now.to_i, seconds )
   end
 
+  def add_pause_minutes(minutes)
+    add_pause(minutes*60)
+  end
 end
 
 pause = Pause.new
 case ARGV[0]
 when 'show'
+  pause.display_all_pause_of_this_day
+when 'add'
+  pause.add_pause_minutes(ARGV[1].to_i)
   pause.display_all_pause_of_this_day
 else
   pause.start_or_end_pause
