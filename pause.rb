@@ -17,7 +17,7 @@ require 'sqlite3'
 class Pause
 
   def db
-    @db ||= SQLite3::Database.new( "pause" )
+    @db ||= SQLite3::Database.new( "z_pause" )
   end
 
   def last_entry_time
@@ -25,7 +25,7 @@ class Pause
     if last_entry.empty?
       return nil
     else
-      return Time.at(last_entry.first.first)
+      return Time.at(last_entry.flatten.first)
     end
   end
 
@@ -66,7 +66,9 @@ class Pause
         Time.at(day[1]).utc.strftime("%H:%M:%S")
     end
     sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
-    puts "Durée total : " + Time.at(sum.first.first).utc.strftime("%H:%M:%S")
+    unless sum.flatten.compact.empty?
+      puts "Durée total : " + Time.at(sum.flatten.first).utc.strftime("%H:%M:%S")
+    end
     if started?
       puts 'Une pause est en cours, début : ' + Time.at(last_entry_time).strftime("%H:%M:%S")
       puts "Durée : #{Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")}"
