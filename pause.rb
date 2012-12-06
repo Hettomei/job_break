@@ -61,9 +61,14 @@ class Pause
   def display_all_pause_of_this_day
     allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
     allday.each do |day|
-      puts Time.at(day[0]).strftime("%Y/%m/%d") +
-        " -> " +
-        Time.at(day[1]).utc.strftime("%H:%M:%S")
+      str = Time.at(day[0]).strftime("%Y/%m/%d") + " -> "
+      if day[1] < 0
+        str.concat('- ')
+      else
+        str.concat('+ ')
+      end
+       str.concat(Time.at(day[1].abs).utc.strftime("%H:%M:%S"))
+       puts str
     end
     sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
     unless sum.flatten.compact.empty?
