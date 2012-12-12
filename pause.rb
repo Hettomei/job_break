@@ -17,7 +17,8 @@ require 'sqlite3'
 class Pause
 
   def db
-    @db ||= SQLite3::Database.new( "z_pause" )
+    dtb_file = File.join(File.dirname(File.expand_path(__FILE__)), 'z_pause')
+    @db ||= SQLite3::Database.new( dtb_file )
   end
 
   def last_entry_time
@@ -61,11 +62,11 @@ class Pause
   def display_all_pause_of_this_day
     allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
     allday.each do |day|
-      str = Time.at(day[0]).strftime("%Y/%m/%d") + " -> "
+      str = Time.at(day[0]).strftime("%Y/%m/%d") +  " -> "
       if day[1] < 0
         str.concat('- ')
       else
-        str.concat('+ ')
+        str.concat('  ')
       end
        str.concat(Time.at(day[1].abs).utc.strftime("%H:%M:%S"))
        puts str
