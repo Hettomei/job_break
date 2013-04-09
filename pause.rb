@@ -49,8 +49,9 @@ class Pause
     display_all_pause_of_this_day
   end
 
-  def display_all_pause_of_this_day
-    allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') < date('now', '+1 day');")
+  def display_all_pause_of_this_day(date = 'now')
+    date ||= 'now'
+    allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('#{date}') and date(day, 'unixepoch') < date('#{date}', '+1 day');")
     allday.each do |day|
       str = Time.at(day[0]).strftime("%Y/%m/%d") +  " -> "
       if day[1] < 0
@@ -61,7 +62,8 @@ class Pause
       str.concat(Time.at(day[1].abs).utc.strftime("%H:%M:%S"))
       puts str
     end
-    sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') < date('now', '+1 day');")
+
+    sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('#{date}') and date(day, 'unixepoch') < date('#{date}', '+1 day');")
     if started?
       puts 'Pause en cours à : ' + Time.at(last_entry_time).strftime("%H:%M:%S") + " durée : #{Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")}"
       unless sum.flatten.compact.empty?
@@ -86,10 +88,13 @@ class Pause
     puts "ruby pause.rb <- start or stop the timer"
     puts "ruby pause.rb show <- display all taken pause for this day"
     puts "ruby pause.rb add x <- add an arbitrary pause. x is in minutes can be positiv or negative."
+    puts "ruby pause.rb -d [date] <- diplay all pause for this date."
+    puts "ruby pause.rb --date [date] <- diplay all pause for this date."
     puts "------"
     puts "I recommand to create an alias :"
     puts "alias pause='ruby pause.rb'"
   end
+
 end
 
 pause = Pause.new
@@ -103,6 +108,10 @@ when 'add'
   pause.display_all_pause_of_this_day
 when '-h'
   pause.display_help
+when '-d'
+  pause.display_all_pause_of_this_day ARGV[1]
+when '--date'
+  pause.display_all_pause_of_this_day ARGV[1]
 else
   if ARGV.count == 0
     pause.start_or_end_pause
