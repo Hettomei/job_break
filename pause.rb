@@ -50,7 +50,7 @@ class Pause
   end
 
   def display_all_pause_of_this_day
-    allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
+    allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') < date('now', '+1 day');")
     allday.each do |day|
       str = Time.at(day[0]).strftime("%Y/%m/%d") +  " -> "
       if day[1] < 0
@@ -61,7 +61,7 @@ class Pause
       str.concat(Time.at(day[1].abs).utc.strftime("%H:%M:%S"))
       puts str
     end
-    sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') <= date('now', '+1 day');")
+    sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('now') and date(day, 'unixepoch') < date('now', '+1 day');")
     if started?
       puts 'Pause en cours à : ' + Time.at(last_entry_time).strftime("%H:%M:%S") + " durée : #{Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")}"
       unless sum.flatten.compact.empty?
