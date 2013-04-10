@@ -12,9 +12,8 @@ class Pause
   end
 
   def display_all_pause_of_this_day(date = 'now')
-    date ||= 'now'
-    allday = db.execute("select day, duration from pauses where date(day, 'unixepoch') >= date('#{date}') and date(day, 'unixepoch') < date('#{date}', '+1 day');")
-    allday.each do |day|
+
+    db.all_pauses(date).each do |day|
       str = Time.at(day[0]).strftime("%Y/%m/%d") +  " -> "
       if day[1] < 0
         str.concat('- ')
@@ -25,7 +24,7 @@ class Pause
       puts str
     end
 
-    sum = db.execute("select sum(duration) from pauses where date(day, 'unixepoch') >= date('#{date}') and date(day, 'unixepoch') < date('#{date}', '+1 day');")
+    sum = db.sum_all_pauses(date)
     if started?
       puts 'Pause en cours à : ' + Time.at(last_entry_time).strftime("%H:%M:%S") + " durée : #{Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")}"
       unless sum.flatten.compact.empty?
@@ -39,7 +38,7 @@ class Pause
   end
 
   def add_pause_minutes(minutes)
-    add_pause(minutes*60)
+    db.add_pause(minutes*60)
   end
 
   def display_help
@@ -56,11 +55,7 @@ class Pause
   private
 
   def db
-    @db ||= Database.new.db
-  end
-
-  def add_pause(seconds)
-    db.execute( "INSERT INTO pauses values (?, ?)", Time.now.to_i, seconds )
+    @db ||= Database.new
   end
 
   def started?
@@ -68,7 +63,7 @@ class Pause
   end
 
   def last_entry_time
-    last_entry = db.execute( "select * from temp" )
+    last_entry = db.last_entry_temp
     if last_entry.empty?
       return nil
     else
@@ -80,17 +75,16 @@ class Pause
     start_time = Time.now
     display_all_pause_of_this_day
     puts 'Début de la pause : ' + start_time.to_s
-    db.execute( "insert into temp values ( ? )", start_time.to_i )
+    db.insert_time_temp start_time
   end
 
   def end_pause
-    @end_time = Time.now
-    puts 'Fin de la pause : ' + @end_time.strftime("%H:%M:%S")
-    puts "Durée : #{Time.at(@end_time - last_entry_time).utc.strftime("%H:%M:%S")}"
+    end_time = Time.now
+    puts 'Fin de la pause : ' + end_time.strftime("%H:%M:%S")
+    puts "Durée : #{Time.at(end_time - last_entry_time).utc.strftime("%H:%M:%S")}"
 
-    add_pause(@end_time - last_entry_time)
-    db.execute( "DELETE from temp" )
-
+    db.add_pause(end_time - last_entry_time)
+    db.delete_temp_values
     display_all_pause_of_this_day
   end
 
