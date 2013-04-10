@@ -1,4 +1,3 @@
-#encoding : utf-8
 require_relative 'database'
 
 class Pause
@@ -26,13 +25,18 @@ class Pause
 
     sum = db.sum_all_pauses(date)
     if started?
-      puts 'Pause en cours à : ' + Time.at(last_entry_time).strftime("%H:%M:%S") + " durée : #{Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")}"
+      puts I18n.t('pause.current_break',
+                  :time => Time.at(last_entry_time).strftime("%H:%M:%S"),
+                  :last => Time.at(Time.now - last_entry_time).utc.strftime("%H:%M:%S")
+                 )
       unless sum.flatten.compact.empty?
-        puts "Durée total : " + Time.at((Time.now - last_entry_time) + sum.flatten.first).utc.strftime("%H:%M:%S")
+        puts I18n.t('pause.total_break_time',
+                   :time => Time.at((Time.now - last_entry_time) + sum.flatten.first).utc.strftime("%H:%M:%S"))
       end
     else
       unless sum.flatten.compact.empty?
-        puts "Durée total : " + Time.at(sum.flatten.first).utc.strftime("%H:%M:%S")
+        puts I18n.t('pause.total_break_time',
+                    :time => Time.at(sum.flatten.first).utc.strftime("%H:%M:%S"))
       end
     end
   end
@@ -42,14 +46,9 @@ class Pause
   end
 
   def display_help
-    puts "ruby pause.rb <- start or stop the timer"
-    puts "ruby pause.rb show <- display all taken pause for this day"
-    puts "ruby pause.rb add x <- add an arbitrary pause. x is in minutes can be positiv or negative."
-    puts "ruby pause.rb -d [date] <- diplay all pause for this date."
-    puts "ruby pause.rb --date [date] <- diplay all pause for this date."
-    puts "------"
-    puts "I recommand to create an alias :"
-    puts "alias pause='ruby pause.rb'"
+    8.times do |n|
+      puts I18n.t("pause.help.text0#{n+1}")
+    end
   end
 
   private
@@ -74,14 +73,16 @@ class Pause
   def start_pause
     start_time = Time.now
     display_all_pause_of_this_day
-    puts 'Début de la pause : ' + start_time.to_s
+    puts I18n.t('pause.starting_break', :time => start_time.to_s)
     db.insert_time_temp start_time
   end
 
   def end_pause
     end_time = Time.now
-    puts 'Fin de la pause : ' + end_time.strftime("%H:%M:%S")
-    puts "Durée : #{Time.at(end_time - last_entry_time).utc.strftime("%H:%M:%S")}"
+    puts I18n.t('pause.ending_break',
+                :time => end_time.strftime("%H:%M:%S"))
+    puts I18n.t('pause.duration_break',
+                :time => Time.at(end_time - last_entry_time).utc.strftime("%H:%M:%S"))
 
     db.add_pause(end_time - last_entry_time)
     db.delete_temp_values

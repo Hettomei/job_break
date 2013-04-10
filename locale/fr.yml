@@ -1,0 +1,16 @@
+fr:
+  pause:
+    current_break: 'Pause en cours à : %{time} durée : %{last}'
+    total_break_time: 'Durée total : %{time}'
+    starting_break: 'Début de la pause : %{time}'
+    ending_break: 'Fin de la pause : %{time}'
+    duration_break: 'Durée : %{time}'
+    help:
+      text01: "ruby start_pause.rb <- Démarre ou arrête le timer"
+      text02: "ruby start_pause.rb show <- Affiche toutes les pauses prises pour le jour courrant"
+      text03: "ruby start_pause.rb add x <- Ajoute une pause arbitraire. x est en minute, peut être positif ou négatif"
+      text04: "ruby start_pause.rb -d [date] <- Affiche toutes les pauses prises pour ce jour. date au format yyyy-mm-dd"
+      text05: "ruby start_pause.rb --date [date] <- idem"
+      text06: "------"
+      text07: "Il est conseillé de créer un alias :"
+      text08: "alias pause='ruby start_pause.rb'"

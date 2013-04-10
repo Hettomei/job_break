@@ -38,7 +38,7 @@ class Database
 
   def db
     @db ||= SQLite3::Database.new(
-      File.expand_path("../dtb_pause_#{ENVIRONNMENT}", __FILE__)
+      File.expand_path("../dtb_pause_#{ENVIRONNMENT}", __FILE__) #required when launch app with an alias
     )
   end
 
