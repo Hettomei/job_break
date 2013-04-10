@@ -1,31 +1,7 @@
 #encoding : utf-8
-require 'sqlite3'
+require_relative 'database'
 
 class Pause
-
-  ENVIRONNMENT = "prod" # "prod" # "dev"
-
-  def the_truth
-    true
-  end
-
-  def db
-    dtb_file = File.join(File.dirname(File.expand_path(__FILE__)), "z_pause_#{ENVIRONNMENT}")
-    @db ||= SQLite3::Database.new( dtb_file )
-  end
-
-  def last_entry_time
-    last_entry = db.execute( "select * from temp" )
-    if last_entry.empty?
-      return nil
-    else
-      return Time.at(last_entry.flatten.first)
-    end
-  end
-
-  def started?
-    return !!last_entry_time
-  end
 
   def start_or_end_pause
     unless started?
@@ -33,24 +9,6 @@ class Pause
     else
       end_pause
     end
-  end
-
-  def start_pause
-    start_time = Time.now
-    display_all_pause_of_this_day
-    puts 'Début de la pause : ' + start_time.to_s
-    db.execute( "insert into temp values ( ? )", start_time.to_i )
-  end
-
-  def end_pause
-    @end_time = Time.now
-    puts 'Fin de la pause : ' + @end_time.strftime("%H:%M:%S")
-    puts "Durée : #{Time.at(@end_time - last_entry_time).utc.strftime("%H:%M:%S")}"
-
-    add_pause(@end_time - last_entry_time)
-    db.execute( "DELETE from temp" )
-
-    display_all_pause_of_this_day
   end
 
   def display_all_pause_of_this_day(date = 'now')
@@ -80,10 +38,6 @@ class Pause
     end
   end
 
-  def add_pause(seconds)
-    db.execute( "INSERT INTO pauses values (?, ?)", Time.now.to_i, seconds )
-  end
-
   def add_pause_minutes(minutes)
     add_pause(minutes*60)
   end
@@ -97,6 +51,47 @@ class Pause
     puts "------"
     puts "I recommand to create an alias :"
     puts "alias pause='ruby pause.rb'"
+  end
+
+  private
+
+  def db
+    @db ||= Database.new.db
+  end
+
+  def add_pause(seconds)
+    db.execute( "INSERT INTO pauses values (?, ?)", Time.now.to_i, seconds )
+  end
+
+  def started?
+    !!last_entry_time
+  end
+
+  def last_entry_time
+    last_entry = db.execute( "select * from temp" )
+    if last_entry.empty?
+      return nil
+    else
+      return Time.at(last_entry.flatten.first)
+    end
+  end
+
+  def start_pause
+    start_time = Time.now
+    display_all_pause_of_this_day
+    puts 'Début de la pause : ' + start_time.to_s
+    db.execute( "insert into temp values ( ? )", start_time.to_i )
+  end
+
+  def end_pause
+    @end_time = Time.now
+    puts 'Fin de la pause : ' + @end_time.strftime("%H:%M:%S")
+    puts "Durée : #{Time.at(@end_time - last_entry_time).utc.strftime("%H:%M:%S")}"
+
+    add_pause(@end_time - last_entry_time)
+    db.execute( "DELETE from temp" )
+
+    display_all_pause_of_this_day
   end
 
 end
