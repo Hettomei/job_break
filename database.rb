@@ -2,8 +2,8 @@ require 'sqlite3'
 
 class Database
 
-  ENVIRONNMENT = "dev"
-  #ENVIRONNMENT = "prod"
+  #ENVIRONNMENT = "dev"
+  ENVIRONNMENT = "prod"
 
   def initialize
   end
@@ -37,9 +37,19 @@ class Database
   private
 
   def db
-    @db ||= SQLite3::Database.new(
-      File.expand_path("../dtb_pause_#{ENVIRONNMENT}", __FILE__) #required when launch app with an alias
-    )
+    return @db if @db
+    @db ||= SQLite3::Database.new(file)
+    @db.execute_batch(sql_create_tables_if_not_exist)
+    @db
+  end
+
+  def file
+    @file ||= File.expand_path("../dtb_pause_#{ENVIRONNMENT}", __FILE__) #required when launch app with an alias
+  end
+
+  def sql_create_tables_if_not_exist
+    "create table if not exists pauses(day datetime,  duration int);" +
+      "create table if not exists temp(start_time datetime);"
   end
 
 end
