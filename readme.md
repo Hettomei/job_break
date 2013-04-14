@@ -1,6 +1,6 @@
 How to use this script :
 
-You need :r
+You need :
 * ruby >= 1.9, ruby >= 2.0
 * gem bundler
 
