@@ -1,4 +1,4 @@
-require_relative '../pause'
+require_relative '../../model/pause'
 
 describe Pause do
   it "should be true" do

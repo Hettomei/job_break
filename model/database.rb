@@ -44,7 +44,7 @@ class Database
   end
 
   def file
-    @file ||= File.expand_path("../dtb_pause_#{ENVIRONNMENT}", __FILE__) #required when launch app with an alias
+    @file ||= File.expand_path("../../dtb/dtb_pausaaaae_#{ENVIRONNMENT}", __FILE__) #required when launch app with an alias
   end
 
   def sql_create_tables_if_not_exist
