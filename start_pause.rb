@@ -1,5 +1,5 @@
 require 'i18n'
-require_relative './model/pause'
+require_relative './models/pause'
 
 a = File.expand_path("../locale", __FILE__) #required when launch app with an alias
 I18n.load_path = ["#{a}/en.yml", "#{a}/fr.yml"]
