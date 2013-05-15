@@ -1,4 +1,5 @@
 require_relative 'database'
+require_relative 'break'
 
 class Pause
 
@@ -10,17 +11,18 @@ class Pause
     end
   end
 
+  def all_pauses(date)
+    [].tap do |pauses|
+      db.all_pauses(date).each do |day|
+        pauses << Break.new(day[0], day[1])
+      end
+    end
+  end
+
   def display_all_pause_of_this_day(date = 'now')
 
-    db.all_pauses(date).each do |day|
-      str = Time.at(day[0]).strftime("%Y/%m/%d") +  " -> "
-      if day[1] < 0
-        str.concat('- ')
-      else
-        str.concat('  ')
-      end
-      str.concat(Time.at(day[1].abs).utc.strftime("%H:%M:%S"))
-      puts str
+    all_pauses(date).each do |pause|
+      puts pause.line
     end
 
     sum = db.sum_all_pauses(date)
