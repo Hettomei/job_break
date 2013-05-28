@@ -1,9 +1,7 @@
 require 'sqlite3'
+require_relative '../configu'
 
 class Database
-
-  ENVIRONNMENT = "dev"
-  #ENVIRONNMENT = "prod"
 
   def add_pause seconds
     db.execute("INSERT INTO pauses values (?, ?)", Time.now.to_i, seconds)
@@ -41,7 +39,8 @@ class Database
   end
 
   def file
-    @file ||= File.expand_path("../../dtb/dtb_pause_#{ENVIRONNMENT}", __FILE__) #required when launch app with an alias
+    #required when launch app with an alias
+    @file ||= File.expand_path("../../dtb/dtb_pause_#{Configu.instance.environment}", __FILE__)
   end
 
   def sql_create_tables_if_not_exist

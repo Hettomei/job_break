@@ -7,7 +7,7 @@ class Pause
     if date
       @date ||= Date.parse(date)
     else
-      @date = Time.now.to_date
+      @date = Date.today
     end
   end
 
@@ -16,7 +16,7 @@ class Pause
   end
 
   def date_to_sql
-    @date_to_sql ||= @date.strftime
+    @date_to_sql ||= date.strftime
   end
 
   def start_or_end_pause
