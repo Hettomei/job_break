@@ -16,20 +16,21 @@ end
 
 load_i18n
 
-case ARGV[0]
-
-when 'show'
-  pause = Pause.new ARGV[1]
-  pause.display_all_pauses
-when 'add'
-  pause.add_pause_minutes(ARGV[1].to_i)
-  pause.display_all_pauses
-when '-h'
-  display_help
+if ARGV.count == 0
+  pause = Pause.new
+  pause.start_or_end_pause
 else
-  if ARGV.count == 0
+  case ARGV[0]
+
+  when 'show'
+    pause = Pause.new ARGV[1]
+    pause.display_all_pauses
+  when 'add'
     pause = Pause.new
-    pause.start_or_end_pause
+    pause.add_pause_minutes(ARGV[1].to_i)
+    pause.display_all_pauses
+  when '-h'
+    display_help
   else
     puts "ArgumentError"
     display_help
