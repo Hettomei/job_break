@@ -4,11 +4,7 @@ require_relative 'break'
 class Pause
 
   def initialize(date = nil)
-    if date
-      @date ||= Date.parse(date)
-    else
-      @date = Date.today
-    end
+    @date = date ? Date.parse(date) : Date.today
   end
 
   def date
@@ -62,12 +58,8 @@ class Pause
 
   #currently, can't be memoized
   def last_entry_time
-    last_entry = db.last_entry_temp
-    if last_entry.empty?
-      return nil
-    else
-      return Time.at(last_entry.flatten.first)
-    end
+    last_entry = db.last_entry_temp.flatten.first
+    last_entry ? Time.at(last_entry) : nil
   end
 
   def start_pause
