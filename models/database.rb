@@ -2,11 +2,8 @@ require 'sqlite3'
 
 class Database
 
-  #ENVIRONNMENT = "dev"
-  ENVIRONNMENT = "prod"
-
-  def initialize
-  end
+  ENVIRONNMENT = "dev"
+  #ENVIRONNMENT = "prod"
 
   def add_pause seconds
     db.execute("INSERT INTO pauses values (?, ?)", Time.now.to_i, seconds)
