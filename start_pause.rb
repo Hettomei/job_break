@@ -1,5 +1,5 @@
 require 'i18n'
-require_relative './models/pause'
+require_relative './controllers/pauses_controller'
 
 def load_i18n
   #required when launch app with an alias
@@ -17,16 +17,16 @@ end
 load_i18n
 
 if ARGV.count == 0
-  pause = Pause.new
+  pause = PausesController.new
   pause.start_or_end_pause
 else
   case ARGV[0]
 
   when 'show'
-    pause = Pause.new ARGV[1]
+    pause = PausesController.new ARGV[1]
     pause.display_all_pauses
   when 'add'
-    pause = Pause.new
+    pause = PausesController.new
     pause.add_pause_minutes(ARGV[1].to_i)
     pause.display_all_pauses
   when '-h'

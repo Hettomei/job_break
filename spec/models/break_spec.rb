@@ -1,7 +1,7 @@
-require_relative '../../models/break'
+require_relative '../../models/pause'
 
-describe Break do
-  let(:breaka){ Break.new(100000, 100) }
+describe Pause do
+  let(:breaka){ Pause.new(100000, 100) }
 
   let(:time){ Time.new() }
 
