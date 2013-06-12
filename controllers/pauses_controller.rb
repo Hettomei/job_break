@@ -1,10 +1,11 @@
 require_relative '../models/database'
 require_relative '../models/pause'
+require_relative '../models/give_a_date'
 
 class PausesController
 
   def initialize(date = nil)
-    @date = date ? Date.parse(date) : Date.today
+    @date = GiveADate.new(date).to_date
   end
 
   def date
