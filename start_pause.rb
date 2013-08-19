@@ -1,10 +1,10 @@
 require 'i18n'
 require_relative './controllers/pauses_controller'
 
-def load_i18n
+def init
   #required when launch app with an alias
-  a = File.expand_path("../locale", __FILE__) #get 'locale' dir
-  I18n.load_path = ["#{a}/en.yml", "#{a}/fr.yml"]
+  local_path = File.expand_path("../locale", __FILE__)
+  I18n.load_path = ["#{local_path}/en.yml", "#{local_path}/fr.yml"]
   I18n.locale = Configu.instance.locale
 end
 
@@ -14,7 +14,7 @@ def display_help
   end
 end
 
-load_i18n
+init
 
 if ARGV.count == 0
   pause = PausesController.new
@@ -32,7 +32,7 @@ else
   when '-h'
     display_help
   else
-    puts "ArgumentError"
     display_help
+    raise ArgumentError
   end
 end

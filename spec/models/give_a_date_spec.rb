@@ -8,7 +8,6 @@ describe GiveADate do
 
   describe "to_date" do
     context "with nothing given" do
-      let(:custom_date){ GiveADate.new }
       it { expect(custom_date.to_date).to eq Date.today }
     end
 
@@ -22,6 +21,10 @@ describe GiveADate do
       it { expect(custom_date.to_date).to eq(Date.today - 3) }
     end
 
+    context "with a malformed string" do
+      let(:a_date){ 'dsaddd' }
+      it { expect{custom_date.to_date}.to raise_error(ArgumentError) }
+    end
   end
 
 end
