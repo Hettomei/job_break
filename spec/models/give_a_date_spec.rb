@@ -1,5 +1,4 @@
 require_relative '../../models/give_a_date'
-require 'date'
 
 describe GiveADate do
 

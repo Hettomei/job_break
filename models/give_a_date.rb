@@ -1,26 +1,29 @@
+require 'adamantium'
+require 'date'
+
 class GiveADate
+
+  include Adamantium
 
   def initialize(date = nil)
     @date = date
   end
 
   def to_date
-    return @to_date if defined? @to_date
-
-    return @to_date = Date.today unless @date
-
-    return  @to_date = Date.today - relative if is_relative?
-
-    @to_date = Date.parse(@date)
+    if is_relative?
+      Date.today + @date.to_i
+    elsif !!@date
+      Date.parse(@date)
+    else
+      Date.today
+    end
   end
+  memoize :to_date
 
   private
 
   def is_relative?
-    @date[0] == '-'
+    @date && @date[0] == '-'
   end
 
-  def relative
-    @date[1..-1].to_i
-  end
 end
