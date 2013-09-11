@@ -7,10 +7,7 @@ class PausesController
   def initialize(date = nil)
     @date = GiveADate.new(date).to_date
   end
-
-  def date
-    @date
-  end
+  attr_reader :date
 
   def date_to_sql
     @date_to_sql ||= date.strftime
