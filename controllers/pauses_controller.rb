@@ -1,6 +1,7 @@
 require_relative '../models/database'
 require_relative '../models/pause'
 require_relative '../models/give_a_date'
+require_relative '../views/display'
 
 class PausesController
 
@@ -30,10 +31,7 @@ class PausesController
   end
 
   def display_all_pauses
-
-    all_pauses.each do |pause|
-      puts pause.line
-    end
+    Display.new(all_pauses).all_pauses
 
     display_break_in_progress
     display_sum_break_plus_in_progress
