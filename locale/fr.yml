@@ -6,10 +6,10 @@ fr:
     ending_break: 'Fin de la pause : %{time}'
     duration_break: 'Durée : %{time}'
     help:
-      text01: "ruby start_pause.rb <- Démarre ou arrête le timer"
-      text02: "ruby start_pause.rb show <- Affiche toutes les pauses prises pour le jour courrant"
-      text03: "ruby start_pause.rb show date <- Affiche toutes les pauses prises pour le jour donnee au formt YYYY-MM-DD"
-      text04: "ruby start_pause.rb add x <- Ajoute une pause arbitraire. x est en minute, peut être positif ou négatif"
-      text05: "------"
-      text06: "Il est conseillé de créer un alias :"
-      text07: "alias pause='ruby start_pause.rb'"
+      text1: "ruby start_pause.rb <- Démarre ou arrête le timer"
+      text2: "ruby start_pause.rb show <- Affiche toutes les pauses prises pour le jour courrant"
+      text3: "ruby start_pause.rb show date <- Affiche toutes les pauses prises pour le jour donnee au formt YYYY-MM-DD"
+      text4: "ruby start_pause.rb add x <- Ajoute une pause arbitraire. x est en minute, peut être positif ou négatif"
+      text5: "------"
+      text6: "Il est conseillé de créer un alias :"
+      text7: "alias pause='ruby start_pause.rb'"

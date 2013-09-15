@@ -10,7 +10,7 @@ end
 
 def display_help
   7.times do |n|
-    puts I18n.t("pause.help.text0#{n+1}")
+    puts I18n.t("pause.help.text#{n+1}")
   end
 end
 
