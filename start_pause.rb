@@ -9,7 +9,7 @@ def init
 end
 
 def display_help
-  7.times do |n|
+  5.times do |n|
     puts I18n.t("pause.help.text#{n+1}")
   end
 end
@@ -28,6 +28,10 @@ else
   when 'add'
     pause = PausesController.new
     pause.add_pause_minutes(ARGV[1].to_i)
+    pause.display_all_pauses
+  when 'del'
+    pause = PausesController.new
+    pause.del_last
     pause.display_all_pauses
   when '-h'
     display_help

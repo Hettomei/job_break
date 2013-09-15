@@ -10,6 +10,4 @@ en:
       text2: "ruby start_pause.rb show <- display all taken pause for this day"
       text3: "ruby start_pause.rb show date <- display all taken pause for this date, format : YYYY-MM-DD"
       text4: "ruby start_pause.rb add x <- add an arbitrary pause. x is in minutes can be positiv or negative."
-      text5: "------"
-      text6: "I recommand to create an alias:"
-      text7: "alias pause='ruby start_pause.rb'"
+      text5: "ruby start_pause.rb del <- del the on going break + del the last break. then print all."

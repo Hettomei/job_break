@@ -29,6 +29,17 @@ class Database
     db.execute( "DELETE from temp" )
   end
 
+  def del_all_last
+    delete_temp_values
+    delete_last_value
+  end
+
+  def delete_last_value
+    db.execute(
+      "delete from pauses where day = (select max(day) from pauses)"
+    )
+  end
+
   private
 
   def db

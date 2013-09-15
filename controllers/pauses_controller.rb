@@ -42,6 +42,10 @@ class PausesController
     db.add_pause(minutes*60)
   end
 
+  def del_last
+    db.del_all_last
+  end
+
   private
 
   def db
