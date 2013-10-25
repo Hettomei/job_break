@@ -1,4 +1,4 @@
-require_relative '../../models/pause'
+require_relative '../lib/job_break/pause'
 
 describe Pause do
   let(:breaka){ Pause.new(100000, 100) }

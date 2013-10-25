@@ -1,4 +1,4 @@
-require_relative '../../models/give_a_date'
+require_relative '../lib/job_break/give_a_date'
 
 describe GiveADate do
 

@@ -1,5 +1,4 @@
 require 'sqlite3'
-require_relative '../configu'
 
 class Database
 
@@ -50,8 +49,9 @@ class Database
   end
 
   def file
-    #required when launch app with an alias
-    @file ||= File.expand_path("../../dtb/dtb_pause_#{Configu.instance.environment}", __FILE__)
+    env = "prod"
+    #env = "dev"
+    @file ||= File.expand_path("../dtb_pause_#{env}", __FILE__)
   end
 
   def sql_create_tables_if_not_exist

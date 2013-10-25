@@ -1,4 +1,4 @@
-require_relative '../../controllers/pauses_controller'
+require_relative '../lib/job_break/pauses_controller'
 
 describe PausesController do
   let(:pause){ PausesController.new }

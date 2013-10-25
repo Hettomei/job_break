@@ -1,7 +1,7 @@
-require_relative '../models/database'
-require_relative '../models/pause'
-require_relative '../models/give_a_date'
-require_relative '../views/display'
+require 'job_break/database'
+require 'job_break/pause'
+require 'job_break/give_a_date'
+require 'job_break/display'
 
 class PausesController
 
