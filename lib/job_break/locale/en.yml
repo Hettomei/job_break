@@ -6,8 +6,8 @@ en:
     ending_break: 'Ending break at: %{time}'
     duration_break: 'Duration: %{time}'
     help:
-      text1: "ruby start_pause.rb <- start or stop the timer"
-      text2: "ruby start_pause.rb show <- display all taken pause for this day"
-      text3: "ruby start_pause.rb show date <- display all taken pause for this date, format : YYYY-MM-DD"
-      text4: "ruby start_pause.rb add x <- add an arbitrary pause. x is in minutes can be positiv or negative."
-      text5: "ruby start_pause.rb del <- del the on going break + del the last break. then print all."
+      text1: "job_break <- start or stop the timer"
+      text2: "job_break show <- display all taken pause for this day"
+      text3: "job_break show date <- display all taken pause for this date, format : YYYY-MM-DD"
+      text4: "job_break add x <- add an arbitrary pause. x is in minutes can be positiv or negative."
+      text5: "job_break del <- del the on going break + del the last break. then print all."

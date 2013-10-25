@@ -4,17 +4,19 @@ You need :
 * ruby >= 1.9, ruby >= 2.0
 * gem bundler
 
-in the same folder of the app, open terminal and type only once :
+If you get the gem from this repo, do a:
 ```shell
-bundle install
+gem install ./job_break-0.0.1.gem
 ```
+and restart your shell.
 
-then you only have to type
+to use it just type:
 ```shell
-ruby start_pause.rb
+job_break
 ```
-or
+and restart your shell.
 
+for more help
 ```shell
-ruby start_pause.rb -h
+job_break -h
 ```
