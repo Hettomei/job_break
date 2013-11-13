@@ -2,4 +2,4 @@
 
 require 'job_break'
 
-JobBreak.new.start(ARGV)
+JobBreak::Main.new.start(ARGV)
