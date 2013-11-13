@@ -29,6 +29,8 @@ class JobBreak
       when 'showloop'
         #TODO : add args -l instead of showloop, prefere show -l
         #TODO: add args to specify sleep duration
+        #TODO, maybe use this instead of begin rescue :
+        # http://www.ruby-doc.org/core-1.9.3/Kernel.html#method-i-trap
         while true
           pause = PausesController.new args[1]
           begin
