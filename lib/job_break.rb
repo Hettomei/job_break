@@ -30,8 +30,8 @@ class JobBreak
         #TODO : add args -l instead of showloop, prefere show -l
         #TODO: add args to specify sleep duration
         while true
+          pause = PausesController.new args[1]
           begin
-            pause = PausesController.new args[1]
             pause.display_all_pauses
             sleep 5
           rescue Interrupt
