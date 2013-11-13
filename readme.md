@@ -20,3 +20,9 @@ for more help
 ```shell
 job_break -h
 ```
+
+
+To build the gem :
+```shell
+gem build job_break.gemspec
+```

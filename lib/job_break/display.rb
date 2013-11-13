@@ -15,7 +15,7 @@ class Display
   end
 
   def display_date pause
-    pause.date.strftime("%Y/%m/%d")
+    pause.date.strftime("%Y-%m-%d")
   end
 
   def display_duration pause
