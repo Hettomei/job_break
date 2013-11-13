@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'job_break'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.executables << 'job_break'
 
   s.date        = '2013-10-25'

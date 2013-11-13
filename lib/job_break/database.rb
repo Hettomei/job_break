@@ -51,7 +51,7 @@ class Database
   def file
     env = "prod"
     #env = "dev"
-    @file ||= File.expand_path("../dtb_pause_#{env}", __FILE__)
+    @file ||= File.expand_path("/var/tmp/ruby_gem_job_break_#{env}", __FILE__)
   end
 
   def sql_create_tables_if_not_exist
