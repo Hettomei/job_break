@@ -17,18 +17,15 @@ module JobBreak
     end
 
     def start args
-      require 'job_break/pauses_controller'
       if args.count == 0
-        pause = PausesController.new
-        pause.start_or_end_pause
+        PausesController.new.start_or_end_pause
       else
         case args[0]
 
         when 'show'
-          pause = PausesController.new args[1]
-          pause.display_all_pauses
+          PausesController.new(args[1]).display_all_pauses
         when 'showloop'
-          showloop args[1]
+          PausesController.new(args[1]).show_loop
         when 'add'
           pause = PausesController.new
           pause.add_pause_minutes(args[1].to_i)
@@ -46,25 +43,10 @@ module JobBreak
       end
     end
 
-    #TODO : add args -l instead of showloop, prefere show -l
-    #TODO: add args to specify sleep duration
-    #TODO, maybe use this instead of begin rescue :
-    # http://www.ruby-doc.org/core-1.9.3/Kernel.html#method-i-trap
-    def showloop date
-      while true
-        pause = PausesController.new date
-        begin
-          pause.display_all_pauses
-          sleep 5
-        rescue Interrupt
-          puts "\nexiting..."
-          exit
-        end
-      end
-    end
   end
 end
 
+require 'job_break/pauses_controller'
 require 'job_break/database'
 require 'job_break/pause'
 require 'job_break/give_a_date'

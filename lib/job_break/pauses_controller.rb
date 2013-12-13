@@ -42,6 +42,18 @@ module JobBreak
       db.del_all_last
     end
 
+    def show_loop
+      while true
+        begin
+          display_all_pauses
+          sleep 5
+        rescue Interrupt
+          puts "\nexiting..."
+          exit
+        end
+      end
+    end
+
     private
 
     def db
