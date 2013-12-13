@@ -26,3 +26,12 @@ To build the gem :
 ```shell
 gem build job_break.gemspec
 ```
+
+To test the gem in irb :
+```shell
+irb -Ilib -rjob_break #'lib' is the first folder, 'job_break' is 'job_break.rb' inside 'lib'
+```
+then
+```ìrb
+JobBreak::Main.new.start(["show"])
+```
