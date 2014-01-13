@@ -1,8 +1,8 @@
 require_relative '../lib/job_break/give_a_date'
 
-describe GiveADate do
+describe JobBreak::GiveADate do
 
-  let(:custom_date){ GiveADate.new(a_date) }
+  let(:custom_date){ JobBreak::GiveADate.new(a_date) }
   let(:a_date){ nil }
 
   describe "to_date" do

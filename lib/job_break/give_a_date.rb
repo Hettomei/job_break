@@ -1,10 +1,10 @@
-require 'adamantium'
+#require 'adamantium'
 require 'date'
 
 module JobBreak
   class GiveADate
 
-    include Adamantium
+    #include Adamantium
 
     def initialize(date = nil)
       @date = date
@@ -19,7 +19,7 @@ module JobBreak
         Date.today
       end
     end
-    memoize :to_date
+    #memoize :to_date
 
     private
 
