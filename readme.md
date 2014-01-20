@@ -1,33 +1,45 @@
 How to use this script :
 
 You need :
-* ruby >= 1.9, ruby >= 2.0
+* ruby >= 1.9
 * gem bundler
 
-If you get the gem from this repo, do a:
+##To build it:
 ```shell
-gem install ./job_break-0.0.1.gem
+gem build job_break.gemspec
 ```
-and restart your shell.
 
-to use it just type:
+##To install it:
 ```shell
-job_break
+gem install ./job_break-0.0.6.gem
 ```
-and restart your shell.
+
+#To use it:
+```shell
+#to run the timer
+$> job_break
+#to stop the timer
+$> job_break
+
+#To display today
+$> job_break show
+
+#To display previous day
+$> job_break show -1
+
+#To add 34 min of break with a comment. Comments are optional
+$> job_break add 34 "lunch"
+
+#To delete the last entry
+$> job_break del
+```
 
 for more help
 ```shell
 job_break -h
 ```
 
-
-To build the gem :
-```shell
-gem build job_break.gemspec
-```
-
-To test the gem in irb :
+##To test in irb
 ```shell
 irb -Ilib -rjob_break #'lib' is the first folder, 'job_break' is 'job_break.rb' inside 'lib'
 ```
