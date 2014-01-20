@@ -28,7 +28,7 @@ module JobBreak
           PausesController.new(args[1]).show_loop
         when 'add'
           pause = PausesController.new
-          pause.add_pause_minutes(args[1].to_i)
+          pause.add_pause_minutes(args[1].to_i, args[2]) #args 2 is a comment
           pause.display_all_pauses
         when 'del'
           pause = PausesController.new

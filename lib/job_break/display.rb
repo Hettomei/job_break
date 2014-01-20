@@ -12,7 +12,7 @@ module JobBreak
     end
 
     def display_line(pause)
-      "#{display_date(pause)} -> #{display_duration(pause)}"
+      "#{display_date(pause)} -> #{display_duration(pause)} - #{pause.comment}"
     end
 
     def display_date pause

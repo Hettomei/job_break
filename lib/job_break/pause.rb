@@ -1,9 +1,10 @@
 module JobBreak
   class Pause
 
-    def initialize(epoch_time, duration_sec)
+    def initialize(epoch_time, duration_sec, comment)
       @epoch_time = epoch_time
       @duration_sec = duration_sec
+      @comment = comment
     end
 
     def date
@@ -12,6 +13,10 @@ module JobBreak
 
     def duration
       @duration ||= Time.at(@duration_sec.abs).utc
+    end
+
+    def comment
+      @comment
     end
 
     def negative?

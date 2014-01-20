@@ -20,8 +20,8 @@ module JobBreak
 
     def all_pauses
       [].tap do |pauses|
-        db.all_pauses(date_to_sql).each do |day|
-          pauses << Pause.new(day[0], day[1])
+        db.all_pauses(date_to_sql).each do |row|
+          pauses << Pause.new(row[0], row[1], row[2])
         end
       end
     end
@@ -34,8 +34,8 @@ module JobBreak
       display_sum_break
     end
 
-    def add_pause_minutes(minutes)
-      db.add_pause(minutes*60)
+    def add_pause_minutes(minutes, comment = '')
+      db.add_pause(minutes*60, comment)
     end
 
     def del_last
