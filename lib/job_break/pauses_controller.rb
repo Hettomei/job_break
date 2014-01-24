@@ -30,7 +30,7 @@ module JobBreak
       Display.new(all_pauses).all_pauses
 
       display_break_in_progress
-      display_sum_break_plus_in_progress
+      puts sum_break_plus_in_progress
       display_sum_break
     end
 
@@ -43,9 +43,12 @@ module JobBreak
     end
 
     def show_loop
-      while true
+      Display.new(all_pauses).all_pauses
+      display_break_in_progress
+      loop do
         begin
-          display_all_pauses
+          print sum_break_plus_in_progress + "\r"
+          $stdout.flush
           sleep 5
         rescue Interrupt
           puts "\nexiting..."
@@ -102,10 +105,10 @@ module JobBreak
       end
     end
 
-    def display_sum_break_plus_in_progress
+    def sum_break_plus_in_progress
       if sum_break && started?
-        puts I18n.t('pause.total_break_time',
-                    :time => Time.at((Time.now - last_entry_time) + sum_break).utc.strftime("%H:%M:%S"))
+        I18n.t('pause.total_break_time',
+               :time => Time.at((Time.now - last_entry_time) + sum_break).utc.strftime("%H:%M:%S"))
       end
     end
 
