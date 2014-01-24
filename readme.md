@@ -14,7 +14,7 @@ gem build job_break.gemspec
 gem install ./job_break-0.0.6.gem
 ```
 
-#To use it:
+##To use it:
 ```shell
 #to run the timer
 $> job_break
@@ -47,3 +47,14 @@ then
 ```ìrb
 JobBreak::Main.new.start(["show"])
 ```
+
+##demo
+Here I start a pause
+Then I stop it (it last only 3 seconds)
+Then I delete the last one
+![demo](demo/demo-job-break.png)
+
+
+#LICENSE
+
+MIT
