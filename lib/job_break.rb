@@ -6,6 +6,7 @@ module JobBreak
     def initialize
       locale = 'fr'
       #locale = 'en'
+      I18n.enforce_available_locales = true
       I18n.load_path = [File.expand_path("../job_break/locale", __FILE__) + "/#{locale}.yml"]
       I18n.locale = locale
     end
