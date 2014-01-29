@@ -11,3 +11,4 @@ fr:
       text3: "job_break show date <- Affiche toutes les pauses prises pour le jour donnee au formt YYYY-MM-DD"
       text4: "job_break add x <- Ajoute une pause arbitraire. x est en minute, peut être positif ou négatif"
       text5: "job_break del <- supprime la pause en cours + efface la derniere entrée."
+      text6: "job_break setup <- create database if not exist. Need to do this the first time"

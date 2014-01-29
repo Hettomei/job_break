@@ -57,6 +57,10 @@ module JobBreak
       end
     end
 
+    def setup
+      db.setup
+    end
+
     private
 
     def db

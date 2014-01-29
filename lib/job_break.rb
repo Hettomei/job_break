@@ -12,7 +12,7 @@ module JobBreak
     end
 
     def display_help
-      5.times do |n|
+      6.times do |n|
         puts I18n.t("pause.help.text#{n+1}")
       end
     end
@@ -35,6 +35,8 @@ module JobBreak
           pause = PausesController.new
           pause.del_last
           pause.display_all_pauses
+        when 'setup'
+          PausesController.new.setup
         when '-h'
           display_help
         else

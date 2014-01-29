@@ -11,3 +11,4 @@ en:
       text3: "job_break show date <- display all taken pause for this date, format : YYYY-MM-DD"
       text4: "job_break add x <- add an arbitrary pause. x is in minutes can be positiv or negative."
       text5: "job_break del <- del the on going break + del the last break. then print all."
+      text6: "job_break setup <- create database if not exist. Need to do this the first time"

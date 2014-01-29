@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'job_break'
-  s.version     = '0.0.7'
+  s.version     = '0.1.0'
   s.executables << 'job_break'
 
   s.date        = '2013-10-25'
@@ -27,5 +27,4 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'sqlite3', '~> 1.3'
   s.add_dependency 'i18n', '~> 0.6'
-  s.add_dependency 'adamantium', '~> 0.1'
 end
