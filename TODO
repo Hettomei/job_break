@@ -1,0 +1,3 @@
+Géré le temps négatif, au lieu d'affiché "23h40:00" afficher "-20 min"
+Géré showloop quand aucune ou une pause
+Amélioré le parsing des argument (Thor?)
