@@ -1,8 +1,13 @@
+GIT
+  remote: https://github.com/svenfuchs/i18n
+  revision: 4612e6ebf357fba5f90f879ff8b753f8cf8415ff
+  specs:
+    i18n (0.7.0.beta1)
+
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
-    i18n (0.6.9)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -17,6 +22,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  i18n
+  i18n!
   rspec
   sqlite3
