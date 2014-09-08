@@ -7,7 +7,10 @@ You need :
 ##To build it:
 ```shell
 gem build job_break.gemspec
+job_break setup
 ```
+
+don't forget to type ```job_break setup``` the first time you use it. It creates database
 
 ##To install it:
 ```shell
