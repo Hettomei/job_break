@@ -1,4 +1,5 @@
-require_relative '../lib/job_break/give_a_date'
+require_relative '../spec_helper'
+require_relative '../../lib/job_break/give_a_date'
 
 describe JobBreak::GiveADate do
 

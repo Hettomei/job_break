@@ -1,6 +1,8 @@
 module JobBreak
   class Pause
 
+    attr_accessor :comment
+
     def initialize(epoch_time, duration_sec, comment)
       @epoch_time = epoch_time
       @duration_sec = duration_sec
@@ -13,10 +15,6 @@ module JobBreak
 
     def duration
       @duration ||= Time.at(@duration_sec.abs).utc
-    end
-
-    def comment
-      @comment
     end
 
     def negative?
