@@ -16,7 +16,7 @@ module JobBreak
     end
 
     def display_date pause
-      pause.date.strftime("%Y-%m-%d")
+      pause.date.strftime("%Y-%m-%d %H:%M:%S")
     end
 
     def display_duration pause
