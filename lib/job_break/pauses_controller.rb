@@ -110,9 +110,10 @@ module JobBreak
     end
 
     def sum_break_plus_in_progress
-      if sum_break && started?
+      if started?
+        sum = sum_break || 0
         I18n.t('pause.total_break_time',
-               :time => Time.at((Time.now - last_entry_time) + sum_break).utc.strftime("%H:%M:%S"))
+               :time => Time.at((Time.now - last_entry_time) + sum).utc.strftime("%H:%M:%S"))
       end
     end
 
